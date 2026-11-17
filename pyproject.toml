@@ -15,9 +15,24 @@ dependencies = [
 dev = [
     "ipykernel>=7.3.0",
     "nbformat>=5.11.1",
+    "pytest>=9.2.0",
 ]
 
 [tool.uv]
 required-version = ">=0.13.5"
 # Apply certificate fixes without adding unused runtime packages.
 constraint-dependencies = ["certifi>=2026.10.19", "pip>=26.2.2"]
+
+[build-system]
+requires = ["uv_build>=0.9,<1"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "kc_housing"
+
+[project.scripts]
+kc-preprocess = "kc_housing.pipeline:main"
+kc-train = "kc_housing.modeling:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
