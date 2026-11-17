@@ -42,7 +42,10 @@ def health() -> dict[str, str]:
 
 
 @app.post(
-    "/houses", response_model=schemas.HouseOut, status_code=status.HTTP_201_CREATED
+    "/houses",
+    tags=["houses"],
+    response_model=schemas.HouseOut,
+    status_code=status.HTTP_201_CREATED,
 )
 def create_house(body: schemas.HouseCreate, db: DbSession) -> models.House:
     house = models.House(**body.model_dump())
@@ -52,18 +55,18 @@ def create_house(body: schemas.HouseCreate, db: DbSession) -> models.House:
     return house
 
 
-@app.get("/houses", response_model=list[schemas.HouseOut])
+@app.get("/houses", tags=["houses"], response_model=list[schemas.HouseOut])
 def list_houses(db: DbSession, skip: int = 0, limit: int = 100) -> list[models.House]:
     statement = select(models.House).order_by(models.House.id).offset(skip).limit(limit)
     return list(db.scalars(statement))
 
 
-@app.get("/houses/{house_id}", response_model=schemas.HouseOut)
+@app.get("/houses/{house_id}", tags=["houses"], response_model=schemas.HouseOut)
 def read_house(house_id: int, db: DbSession) -> models.House:
     return get_house_or_404(db, house_id)
 
 
-@app.put("/houses/{house_id}", response_model=schemas.HouseOut)
+@app.put("/houses/{house_id}", tags=["houses"], response_model=schemas.HouseOut)
 def replace_house(
     house_id: int, body: schemas.HouseCreate, db: DbSession
 ) -> models.House:
@@ -76,7 +79,7 @@ def replace_house(
     return house
 
 
-@app.patch("/houses/{house_id}", response_model=schemas.HouseOut)
+@app.patch("/houses/{house_id}", tags=["houses"], response_model=schemas.HouseOut)
 def update_house(
     house_id: int, body: schemas.HouseUpdate, db: DbSession
 ) -> models.House:
@@ -89,7 +92,9 @@ def update_house(
     return house
 
 
-@app.delete("/houses/{house_id}", status_code=status.HTTP_204_NO_CONTENT)
+@app.delete(
+    "/houses/{house_id}", tags=["houses"], status_code=status.HTTP_204_NO_CONTENT
+)
 def delete_house(house_id: int, db: DbSession) -> Response:
     db.delete(get_house_or_404(db, house_id))
     db.commit()
