@@ -172,3 +172,4 @@ Thumbs.db
 # Model files
 model/
 data/processed/
+api/houses.db

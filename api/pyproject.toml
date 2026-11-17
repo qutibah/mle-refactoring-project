@@ -1,0 +1,28 @@
+[project]
+name = "kc-houses-api"
+version = "0.1.0"
+description = "FastAPI CRUD service for King County houses."
+requires-python = ">=3.13.17"
+dependencies = [
+    "fastapi>=0.141.1",
+    "psycopg[binary]>=3.3.5",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+    "sqlalchemy>=2.0.52",
+    "uvicorn>=0.52.4",
+]
+
+[dependency-groups]
+dev = [
+ "httpx2>=2.16.2",
+ "pytest>=9.2.0",
+]
+
+[tool.uv]
+required-version = ">=0.13.5"
+package = false
+constraint-dependencies = ["certifi>=2026.10.19", "pip>=26.2.2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

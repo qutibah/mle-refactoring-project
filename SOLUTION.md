@@ -26,6 +26,7 @@ df = preprocess(load_data())
 | `src/kc_housing/pipeline.py` | `load_data()`, `preprocess()` and the `kc-preprocess` CLI |
 | `src/kc_housing/modeling.py` | Stretch goal: final model, training and saving (`kc-train` CLI) |
 | `tests/test_pipeline.py` | Unit tests + a test that the pipeline matches the original notebook code |
+| `api/` | Stretch goal: FastAPI CRUD app + Postgres, `Dockerfile`, `docker-compose.yaml`, tests (see `api/README.md`) |
 
 ## Answers to the project questions
 
@@ -40,6 +41,10 @@ df = preprocess(load_data())
 4. Wrote tests, including one that runs the notebook's original code and checks the
    pipeline produces identical output.
 5. Stretch: refactored the final ElasticNet model into `modeling.py` with a CLI (test R² ≈ 0.84).
+6. Stretch: built a FastAPI CRUD app for houses (5 features: price, bedrooms, bathrooms,
+   sqft_living, grade) backed by Postgres, containerised it with a `Dockerfile` and
+   `docker-compose.yaml`, and verified it running in Docker. API tests use SQLite, so they run
+   without Docker.
 
 **What challenges did you face?**
 
@@ -58,4 +63,4 @@ df = preprocess(load_data())
   pipeline and the waterfront reference is learned in `fit()`.
 - Use a proper haversine distance, and remove dataset-wide steps (water reference) before the
   train/test split to avoid slight leakage.
-- Build the FastAPI + Docker stretch goal (see `bonus_solution/`) and add CI that runs the tests.
+- Add a `/predict` endpoint to the API that loads the trained model, and CI that runs both test suites.
